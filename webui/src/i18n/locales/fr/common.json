@@ -1,20 +1,20 @@
 {
   "app": {
-    "brand": "nanobot",
+    "brand": "Foreman",
     "loading": {
-      "connecting": "Connexion à nanobot…",
-      "boot": "Chargement de nanobot…"
+      "connecting": "Connexion à Foreman…",
+      "boot": "Chargement de Foreman…"
     },
     "error": {
-      "title": "Impossible de joindre nanobot",
-      "gatewayHint": "Assurez-vous que la gateway est en cours d’exécution (`nanobot gateway`) et que cette page est ouverte sur la même machine."
+      "title": "Impossible de joindre Foreman",
+      "gatewayHint": "Assurez-vous que la gateway est en cours d’exécution (`foreman gateway`) et que cette page est ouverte sur la même machine."
     },
     "documentTitle": {
-      "base": "nanobot",
-      "chat": "{{title}} · nanobot"
+      "base": "Foreman",
+      "chat": "{{title}} · Foreman"
     },
     "meta": {
-      "description": "Interface web nanobot — discutez avec votre espace de travail nanobot."
+      "description": "Interface web Foreman — discutez avec votre espace de travail Foreman."
     }
   },
   "sidebar": {

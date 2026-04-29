@@ -1,20 +1,20 @@
 {
   "app": {
-    "brand": "nanobot",
+    "brand": "Foreman",
     "loading": {
-      "connecting": "nanobot に接続中…",
-      "boot": "nanobot を読み込み中…"
+      "connecting": "Foreman に接続中…",
+      "boot": "Foreman を読み込み中…"
     },
     "error": {
-      "title": "nanobot に接続できませんでした",
-      "gatewayHint": "gateway（`nanobot gateway`）が起動しており、このページが同じマシン上で開かれていることを確認してください。"
+      "title": "Foreman に接続できませんでした",
+      "gatewayHint": "gateway（`foreman gateway`）が起動しており、このページが同じマシン上で開かれていることを確認してください。"
     },
     "documentTitle": {
-      "base": "nanobot",
-      "chat": "{{title}} · nanobot"
+      "base": "Foreman",
+      "chat": "{{title}} · Foreman"
     },
     "meta": {
-      "description": "nanobot Web UI — nanobot ワークスペースと会話します。"
+      "description": "Foreman Web UI — Foreman ワークスペースと会話します。"
     }
   },
   "sidebar": {

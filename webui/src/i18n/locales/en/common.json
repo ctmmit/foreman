@@ -1,20 +1,20 @@
 {
   "app": {
-    "brand": "nanobot",
+    "brand": "Foreman",
     "loading": {
-      "connecting": "Connecting to nanobot…",
-      "boot": "Loading nanobot…"
+      "connecting": "Connecting to Foreman…",
+      "boot": "Loading Foreman…"
     },
     "error": {
-      "title": "Couldn't reach nanobot",
-      "gatewayHint": "Make sure the gateway is running (`nanobot gateway`) and that this page is open on the same machine."
+      "title": "Couldn't reach Foreman",
+      "gatewayHint": "Make sure the gateway is running (`foreman gateway`) and that this page is open on the same machine."
     },
     "documentTitle": {
-      "base": "nanobot",
-      "chat": "{{title}} · nanobot"
+      "base": "Foreman",
+      "chat": "{{title}} · Foreman"
     },
     "meta": {
-      "description": "nanobot web UI — chat with your nanobot workspace."
+      "description": "Foreman web UI — chat with your Foreman workspace."
     }
   },
   "sidebar": {

@@ -1,20 +1,20 @@
 {
   "app": {
-    "brand": "nanobot",
+    "brand": "Foreman",
     "loading": {
-      "connecting": "正在连接 nanobot…",
-      "boot": "正在加载 nanobot…"
+      "connecting": "正在连接 Foreman…",
+      "boot": "正在加载 Foreman…"
     },
     "error": {
-      "title": "无法连接到 nanobot",
-      "gatewayHint": "请确认 gateway 已启动（`nanobot gateway`），并且当前页面与 gateway 运行在同一台机器上。"
+      "title": "无法连接到 Foreman",
+      "gatewayHint": "请确认 gateway 已启动（`foreman gateway`），并且当前页面与 gateway 运行在同一台机器上。"
     },
     "documentTitle": {
-      "base": "nanobot",
-      "chat": "{{title}} · nanobot"
+      "base": "Foreman",
+      "chat": "{{title}} · Foreman"
     },
     "meta": {
-      "description": "nanobot Web UI —— 与你的 nanobot 工作区对话。"
+      "description": "Foreman Web UI —— 与你的 Foreman 工作区对话。"
     }
   },
   "sidebar": {

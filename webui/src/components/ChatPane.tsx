@@ -85,7 +85,7 @@ export function ChatPane({ session, onNewChat }: ChatPaneProps) {
               />
               <img
                 src="/brand/nanobot_logo.png"
-                alt="nanobot"
+                alt="Foreman"
                 className="h-12 w-auto select-none drop-shadow-sm"
                 draggable={false}
               />
@@ -94,7 +94,7 @@ export function ChatPane({ session, onNewChat }: ChatPaneProps) {
               What's on your mind?
             </h1>
             <p className="max-w-md text-center text-sm text-muted-foreground">
-              Your conversations are persisted locally under the nanobot
+              Your conversations are persisted locally under the Foreman
               workspace. Start typing and I'll open a new chat.
             </p>
           </div>

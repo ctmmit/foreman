@@ -140,7 +140,7 @@ export function ThreadShell({
           draggable={false}
           className="h-4 w-4 rounded-sm opacity-90"
         />
-        <span className="text-foreground/82">nanobot</span>
+        <span className="text-foreground/82">Foreman</span>
       </div>
       <p className="max-w-[28rem] text-[13px] leading-6 text-muted-foreground">
         {t("thread.empty.description")}

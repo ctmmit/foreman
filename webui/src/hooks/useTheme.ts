@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
-const STORAGE_KEY = "nanobot-webui.theme";
+const STORAGE_KEY = "foreman-webui.theme";
 
 function readStored(): Theme | null {
   try {

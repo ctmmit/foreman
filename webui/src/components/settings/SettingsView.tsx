@@ -235,7 +235,7 @@ function SettingsFooter({
   return (
     <div className="flex min-h-[52px] items-center justify-between gap-4 px-3 py-2.5">
       <div className="text-sm text-muted-foreground">
-        {saved ? "Saved. Restart nanobot to apply." : "Unsaved changes."}
+        {saved ? "Saved. Restart Foreman to apply." : "Unsaved changes."}
       </div>
       <Button size="sm" variant="outline" onClick={onSave} disabled={!dirty || saving}>
         {saving ? "Saving" : "Save"}

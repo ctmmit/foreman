@@ -24,7 +24,7 @@ type BootState =
       modelName: string | null;
     };
 
-const SIDEBAR_STORAGE_KEY = "nanobot-webui.sidebar";
+const SIDEBAR_STORAGE_KEY = "foreman-webui.sidebar";
 const SIDEBAR_WIDTH = 279;
 type ShellView = "chat" | "settings";
 

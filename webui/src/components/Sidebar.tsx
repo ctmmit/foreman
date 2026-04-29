@@ -31,7 +31,7 @@ export function Sidebar(props: SidebarProps) {
           <source srcSet="/brand/nanobot_logo.webp" type="image/webp" />
           <img
             src="/brand/nanobot_logo.png"
-            alt="nanobot"
+            alt="Foreman"
             className="h-7 w-auto select-none object-contain"
             draggable={false}
           />
