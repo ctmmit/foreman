@@ -124,13 +124,16 @@ include = [
     "nanobot/templates/**/*.md",
     "nanobot/skills/**/*.md",
     "nanobot/skills/**/*.sh",
+    "foreman/**/*.py",
+    "skills/**/SKILL.md",
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["nanobot"]
+packages = ["nanobot", "foreman"]
 
 [tool.hatch.build.targets.wheel.sources]
 "nanobot" = "nanobot"
+"foreman" = "foreman"
 
 [tool.hatch.build.targets.wheel.force-include]
 "bridge" = "nanobot/bridge"
@@ -138,10 +141,14 @@ packages = ["nanobot"]
 [tool.hatch.build.targets.sdist]
 include = [
     "nanobot/",
+    "foreman/",
+    "skills/",
     "bridge/",
+    "CLAUDE.md",
     "README.md",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
+    "upstream-version.lock",
     "pyproject.toml",
 ]
 
@@ -155,10 +162,10 @@ ignore = ["E501"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-testpaths = ["tests"]
+testpaths = ["tests", "foreman/tests"]
 
 [tool.coverage.run]
-source = ["nanobot"]
+source = ["nanobot", "foreman"]
 omit = ["tests/*", "**/tests/*"]
 
 [tool.coverage.report]
