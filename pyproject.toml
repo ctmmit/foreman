@@ -1,15 +1,18 @@
 [project]
-name = "nanobot-ai"
-version = "0.1.5.post3"
-description = "A lightweight personal AI assistant framework"
+name = "foreman-ai"
+version = "0.1.0"
+description = "Foreman: a quoting agent for small US machine shops. Forked from nanobot (HKUDS/nanobot, MIT)."
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
-    {name = "Xubin Ren"},
-    {name = "the nanobot contributors"}
+    {name = "Aline Zimerman"},
+    {name = "Colin McGonigle"},
+    {name = "Omar Dominguez"},
+    {name = "Xubin Ren (upstream nanobot)"},
+    {name = "the nanobot contributors (upstream)"}
 ]
-keywords = ["ai", "agent", "chatbot"]
+keywords = ["ai", "agent", "manufacturing", "quoting", "machine-shop", "rfq"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -106,7 +109,7 @@ dev = [
 ]
 
 [project.scripts]
-nanobot = "nanobot.cli.commands:app"
+foreman = "nanobot.cli.commands:app"
 
 [build-system]
 requires = ["hatchling"]

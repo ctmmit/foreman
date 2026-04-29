@@ -1,5 +1,8 @@
 """
-nanobot - A lightweight AI agent framework
+Foreman - a quoting agent for small US machine shops, built on nanobot.
+
+The internal package name `nanobot` is preserved to keep upstream merges clean;
+all user-facing surfaces are rebranded to Foreman.
 """
 
 from importlib.metadata import PackageNotFoundError, version as _pkg_version
@@ -17,15 +20,16 @@ def _read_pyproject_version() -> str | None:
 
 
 def _resolve_version() -> str:
-    try:
-        return _pkg_version("nanobot-ai")
-    except PackageNotFoundError:
-        # Source checkouts often import nanobot without installed dist-info.
-        return _read_pyproject_version() or "0.1.5.post3"
+    for dist_name in ("foreman-ai", "nanobot-ai"):
+        try:
+            return _pkg_version(dist_name)
+        except PackageNotFoundError:
+            continue
+    return _read_pyproject_version() or "0.1.0"
 
 
 __version__ = _resolve_version()
-__logo__ = "🐈"
+__logo__ = "🔧"
 
 from nanobot.nanobot import Nanobot, RunResult
 

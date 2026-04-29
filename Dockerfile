@@ -33,15 +33,15 @@ RUN git config --global --add url."https://github.com/".insteadOf ssh://git@gith
 WORKDIR /app
 
 # Create non-root user and config directory
-RUN useradd -m -u 1000 -s /bin/bash nanobot && \
-    mkdir -p /home/nanobot/.nanobot && \
-    chown -R nanobot:nanobot /home/nanobot /app
+RUN useradd -m -u 1000 -s /bin/bash foreman && \
+    mkdir -p /home/foreman/.foreman && \
+    chown -R foreman:foreman /home/foreman /app
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh && chmod +x /usr/local/bin/entrypoint.sh
 
-USER nanobot
-ENV HOME=/home/nanobot
+USER foreman
+ENV HOME=/home/foreman
 
 # Gateway default port
 EXPOSE 18790
