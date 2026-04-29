@@ -1,0 +1,156 @@
+# Foreman shop knowledge — example payload for `foreman onboard-shop --from`.
+#
+# This file is the canonical shape the onboard-shop YAML loader expects.
+# Copy it, edit, then run:
+#   foreman onboard-shop --from my_shop.yaml
+#
+# Every committed record generates an audit_log entry stamped
+# caller="foreman-onboard-shop", so the owner can always see what was added.
+
+# ---------------------------------------------------------------------------
+# Shop profile (singleton; full replace each run)
+# ---------------------------------------------------------------------------
+shop_profile:
+  manufactures:
+    - "precision CNC machining"
+    - "tool & die"
+  certifications:
+    - "AS9100"
+    - "ISO 9001"
+  capabilities:
+    - "5-axis CNC"
+    - "Swiss turning"
+    - "EDM"
+  location: "Allentown, PA"
+  employee_count: 12
+  established_year: 1987
+  notes: |
+    Family-owned. Specializes in aerospace bracket work and small-batch
+    medical-device fittings.
+
+# ---------------------------------------------------------------------------
+# Equipment (machines on the floor)
+# ---------------------------------------------------------------------------
+equipment:
+  - machine_id: haas-vf2-3axis
+    name: Haas VF-2
+    manufacturer: Haas
+    model: VF-2
+    envelope:
+      axes: 3
+      max_workpiece_size_mm: 762
+      tolerance_class: "±0.005"
+      tooling: ["20-pocket changer"]
+    notes: ""
+
+  - machine_id: haas-umc750-5axis
+    name: Haas UMC-750
+    manufacturer: Haas
+    model: UMC-750
+    envelope:
+      axes: 5
+      max_workpiece_size_mm: 750
+      tolerance_class: "±0.002"
+      tooling: ["live tooling"]
+
+  - machine_id: doosan-puma-2600
+    name: Doosan Puma 2600
+    manufacturer: Doosan
+    model: Puma 2600
+    envelope:
+      axes: 2
+      tolerance_class: "±0.003"
+      tooling: ["sub-spindle"]
+
+# ---------------------------------------------------------------------------
+# Customers (basic seeding; ERP / email-history scan is roadmap §1)
+# ---------------------------------------------------------------------------
+customers:
+  - customer_id: aerospace_customer
+    display_name: Aerospace Customer
+    aliases: ["Aerospace Co.", "Aero"]
+    email_domains: ["aerospace.com"]
+    email_addresses: ["buyer@aerospace.com"]
+    payment_terms: "Net 60"
+    payment_behavior: "pays slow"
+    quality_expectations: "AS9100 traceability required on every job"
+    certifications_required: ["AS9100"]
+
+  - customer_id: bosch_frenos
+    display_name: Bosch Frenos S.A.
+    aliases: ["Bosch", "Frenos"]
+    email_domains: ["bosch.com.mx"]
+    payment_terms: "Net 30"
+    payment_behavior: "always on time"
+    notes: "Spanish-language drawings; D-2 tool steel work."
+
+  - customer_id: medical_device_oem
+    display_name: Medical Device OEM
+    email_domains: ["medical-oem.example"]
+    payment_terms: "Net 30"
+    quality_expectations: "Full traceability + electropolish on every fitting."
+    certifications_required: ["ISO 13485"]
+
+# ---------------------------------------------------------------------------
+# Materials
+# ---------------------------------------------------------------------------
+materials:
+  - material_code: "6061-T6"
+    preferred_suppliers: ["Metal Supermarket", "Online Metals"]
+    typical_lead_time_days: 3
+    scrap_factor: 1.10
+    margin_default_pct: 22.5
+
+  - material_code: "1018"
+    preferred_suppliers: ["Online Metals"]
+    typical_lead_time_days: 4
+    scrap_factor: 1.08
+
+  - material_code: "304"
+    preferred_suppliers: ["OnlineMetals", "Industrial Metal Supply"]
+    typical_lead_time_days: 5
+    scrap_factor: 1.12
+
+  - material_code: "AISI D-2"
+    preferred_suppliers: ["Tool Steel Co"]
+    typical_lead_time_days: 10
+    scrap_factor: 1.15
+    notes: "Specialty supplier; expedite +50%."
+
+# ---------------------------------------------------------------------------
+# Routing memory (trusted outside processors per process+material)
+# ---------------------------------------------------------------------------
+routing_memory:
+  - process: anodize
+    material: "6061-T6"
+    trusted_processors: ["AnodizingPro"]
+    typical_turnaround_days: 4
+    quality_outcomes: "Consistent finish; never had a rejection in 3 years."
+
+  - process: heat-treat
+    material: "AISI D-2"
+    trusted_processors: ["BohlerHeatTreat", "PrecisionThermal"]
+    typical_turnaround_days: 7
+    quality_outcomes: "Bohler is faster but PT runs tighter on hardness."
+
+  - process: passivate
+    material: "304"
+    trusted_processors: ["StainlessFinishCo"]
+    typical_turnaround_days: 3
+
+# ---------------------------------------------------------------------------
+# Pricing corrections (owner's standing rules per customer)
+# ---------------------------------------------------------------------------
+# customer_id MUST match a customer added above; dangling references are
+# skipped and surfaced in the onboarding summary.
+pricing_corrections:
+  - customer_id: aerospace_customer
+    rule_text: "They always pay slow. Add 8 percent."
+    margin_pct_delta: 8.0
+    context_key: "default"
+    applies_when: "always"
+
+  - customer_id: medical_device_oem
+    rule_text: "Quality docs take an extra 2 days; bake it into the lead."
+    lead_delta_days: 2
+    context_key: "default"

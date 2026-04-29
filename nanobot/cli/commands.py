@@ -63,9 +63,14 @@ app = typer.Typer(
     no_args_is_help=True,
 )
 
-# Foreman: register Foreman-owned CLI commands (`install`, `queue ...`).
-from foreman.cli import register_install_command, register_queue_commands  # noqa: E402
+# Foreman: register Foreman-owned CLI commands.
+from foreman.cli import (  # noqa: E402
+    register_install_command,
+    register_onboard_shop_command,
+    register_queue_commands,
+)
 register_install_command(app)
+register_onboard_shop_command(app)
 register_queue_commands(app)
 
 console = Console()
