@@ -1,0 +1,10 @@
+# Foreman upstream pin
+# Source of truth for which nanobot revision Foreman is built on.
+# Bump this only after a successful upstream merge that passes the verification suite.
+# See ../code/CLAUDE.md "Working agreements" → upstream merges.
+
+upstream_repo: https://github.com/HKUDS/nanobot
+upstream_tag:  v0.1.5.post3
+upstream_sha:  0b1631f33d8040802aa09d66a01bc731e3cb85a2
+pinned_at:     2026-04-29
+pinned_by:     ctmmit
