@@ -1,0 +1,59 @@
+# Foreman policy: on-prem deployment (strictest)
+#
+# A GPU box in the shop's server room. Used by shops with defense work,
+# ITAR exposure, or controlled-data programs. The strictest of the three
+# policies: minimal external surface, all outbound to enumerated hosts only,
+# no escape hatches enabled by default.
+#
+# Per CLAUDE.md → Deployment targets, on-prem is for shops where drawings
+# absolutely cannot leave the building. The egress allowlist is therefore
+# very small: the configured LLM provider only (and only one), plus the
+# shop's email server. No MCP servers in default, no extra_hosts, no
+# extra_ssrf_cidrs unless the wizard explicitly adds them.
+
+name: "on-prem"
+description: "On-prem GPU box; strictest egress for ITAR / defense work"
+
+network:
+  # On-prem deployments often run a LOCAL LLM (Ollama, vLLM) and need NO
+  # cloud LLM access at all. The wizard asks the owner whether to leave
+  # this empty (local-only) or to add a cloud provider as a fallback.
+  llm_provider_hosts: []
+
+  # Wizard populates this with the shop's IMAP/SMTP server. Often a single
+  # internal hostname.
+  email_servers: []
+
+  # Empty by default. Phase Three may add explicitly enumerated MCP servers
+  # the shop opts into — never opaque external ones.
+  mcp_servers: []
+
+  # No escape hatches in the default for on-prem. Adding any here is a
+  # security-review event.
+  extra_hosts: []
+
+  # Empty default. If the shop runs a private inference cluster reachable
+  # via Tailscale or a private VPN, the wizard adds the relevant CIDR here.
+  extra_ssrf_cidrs: []
+
+outbound_send:
+  # Hard no on autonomous send for on-prem. ITAR and defense work require
+  # human-in-the-loop for every external communication.
+  require_human_approval: true
+
+  # Empty for on-prem. No exceptions.
+  auto_approve_channels: []
+
+sandbox:
+  # Linux required (bubblewrap unavailable on macOS/Windows). On-prem
+  # deployments are Linux only.
+  workspace_isolation: bubblewrap
+
+  # Belt-and-suspenders: explicit confirmation that metadata endpoints are
+  # blocked even though there's no cloud metadata service to reach.
+  block_metadata_endpoints: true
+
+audit:
+  log_personality_writes: true
+  log_outbound_attempts: true
+  log_egress_denials: true

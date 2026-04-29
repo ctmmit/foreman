@@ -1,0 +1,55 @@
+# Foreman policy: managed-cloud deployment
+#
+# Multi-tenant SaaS hosted by us. Each shop gets a single-tenant database and
+# isolated workspace. Default for the wedge market.
+#
+# This policy is loaded by the agent at boot and pinned for the life of the
+# process. Changing it requires a security review per CLAUDE.md → Working
+# agreements (Colin owns network policy reviews).
+
+name: "managed-cloud"
+description: "Multi-tenant managed-cloud deployment"
+
+network:
+  # LLM providers Foreman is permitted to call.
+  llm_provider_hosts:
+    - api.anthropic.com
+    - api.openai.com
+
+  # Email server hostnames. Empty in the shipped default; the install wizard
+  # appends the shop's IMAP/SMTP server here when email is configured.
+  email_servers: []
+
+  # MCP servers. Empty in Phase One; populated in Phase Three when the
+  # shop opts into network capabilities.
+  mcp_servers: []
+
+  # Escape hatch for one-off allowed hosts. Each entry is a security-review
+  # item; document the reason inline.
+  extra_hosts: []
+
+  # CIDRs to allow despite default-deny on private networks. Empty for
+  # managed cloud (we don't reach customer-private networks from our SaaS).
+  extra_ssrf_cidrs: []
+
+outbound_send:
+  # CLAUDE.md Non-negotiable #1. Phase One: agent never sends a quote or any
+  # external communication without explicit owner approval. Removing this
+  # requires a written exception signed off by Omar and Colin.
+  require_human_approval: true
+
+  # Channels exempted from the approval gate. Empty in Phase One.
+  auto_approve_channels: []
+
+sandbox:
+  # Linux kernel namespaces (matches upstream nanobot Docker image).
+  workspace_isolation: bubblewrap
+
+  # Block AWS/GCP metadata endpoints (already in nanobot's _BLOCKED_NETWORKS,
+  # but called out here so we can't accidentally relax it).
+  block_metadata_endpoints: true
+
+audit:
+  log_personality_writes: true
+  log_outbound_attempts: true
+  log_egress_denials: true

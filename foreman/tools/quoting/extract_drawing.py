@@ -206,6 +206,25 @@ class ExtractDrawingTool(Tool):
                 customer_id_hint,
             )
 
+        # Defense-in-depth: confirm the deployment policy permits us to reach
+        # the Anthropic API. Fails closed if no policy is loaded.
+        try:
+            from foreman.security import PolicyNotLoaded, validate_egress
+
+            ok, why = validate_egress("https://api.anthropic.com/v1/messages")
+            if not ok:
+                return json.dumps(_build_error(
+                    drawing_path,
+                    f"Egress denied by policy: {why}",
+                ))
+        except PolicyNotLoaded:
+            return json.dumps(_build_error(
+                drawing_path,
+                "No deployment policy loaded; cannot validate egress. "
+                "This indicates a bootstrap problem — the agent should have "
+                "called foreman.security.bootstrap_policy() at startup.",
+            ))
+
         try:
             from anthropic import Anthropic  # local import keeps tool importable without anthropic
         except ImportError:

@@ -1,0 +1,45 @@
+# Foreman policy: single-tenant-cloud deployment
+#
+# The shop's own AWS, GCP, or Azure account. Foreman runs in their cloud,
+# their VPC, on infrastructure they own. Used by shops with mid-tier
+# compliance requirements or strong preference for owning their cloud bill.
+#
+# This template ships as a starting point; the install wizard customizes
+# email_servers, mcp_servers, and extra_ssrf_cidrs per the shop's setup.
+
+name: "single-tenant-cloud"
+description: "Shop's own cloud account (AWS / GCP / Azure)"
+
+network:
+  # LLM providers — same default set as managed-cloud; the shop can add or
+  # remove specific providers via the wizard.
+  llm_provider_hosts:
+    - api.anthropic.com
+    - api.openai.com
+
+  # Empty default; wizard populates per the shop's email infrastructure.
+  email_servers: []
+
+  # Empty default; populated if the shop runs internal MCP servers.
+  mcp_servers: []
+
+  extra_hosts: []
+
+  # Single-tenant deployments often need to reach private VPC ranges
+  # (e.g., a private RDS endpoint). Wizard prompts for these and adds them
+  # here. Empty in the default.
+  extra_ssrf_cidrs: []
+
+outbound_send:
+  # Same Phase One non-negotiable as managed-cloud.
+  require_human_approval: true
+  auto_approve_channels: []
+
+sandbox:
+  workspace_isolation: bubblewrap
+  block_metadata_endpoints: true
+
+audit:
+  log_personality_writes: true
+  log_outbound_attempts: true
+  log_egress_denials: true

@@ -126,6 +126,7 @@ include = [
     "nanobot/skills/**/*.sh",
     "foreman/**/*.py",
     "skills/**/SKILL.md",
+    "policies/*.yaml",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -143,6 +144,7 @@ include = [
     "nanobot/",
     "foreman/",
     "skills/",
+    "policies/",
     "bridge/",
     "CLAUDE.md",
     "README.md",

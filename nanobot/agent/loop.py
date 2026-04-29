@@ -387,6 +387,13 @@ class AgentLoop:
                 CronTool(self.cron_service, default_timezone=self.context.timezone or "UTC")
             )
 
+        # Foreman: bootstrap the deployment policy (egress allowlist + SSRF
+        # whitelist + outbound-send gate) BEFORE registering tools that issue
+        # outbound traffic. Fail-loud if no policy resolves; that's the safer
+        # failure mode than silently running unrestricted.
+        from foreman.security import bootstrap_policy as _bootstrap_foreman_policy
+        _bootstrap_foreman_policy()
+
         # Foreman: register the seven shop-* quoting tools.
         # Single import + single call so upstream merges of this file are minimal.
         from foreman.tools import register_all as _register_foreman_tools
