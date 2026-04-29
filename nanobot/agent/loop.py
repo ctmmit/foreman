@@ -387,6 +387,11 @@ class AgentLoop:
                 CronTool(self.cron_service, default_timezone=self.context.timezone or "UTC")
             )
 
+        # Foreman: register the seven shop-* quoting tools.
+        # Single import + single call so upstream merges of this file are minimal.
+        from foreman.tools import register_all as _register_foreman_tools
+        _register_foreman_tools(self.tools, workspace=self.workspace)
+
     async def _connect_mcp(self) -> None:
         """Connect to configured MCP servers (one-time, lazy)."""
         if self._mcp_connected or self._mcp_connecting or not self._mcp_servers:
