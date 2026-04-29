@@ -1,0 +1,34 @@
+[Unit]
+Description=Foreman quoting agent for {{ shop_name | default('the shop') }}
+Documentation=https://github.com/ctmmit/foreman
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User={{ run_user | default('foreman') }}
+Group={{ run_group | default('foreman') }}
+WorkingDirectory={{ install_dir }}
+EnvironmentFile={{ env_file_path }}
+Environment="FOREMAN_POLICY_TARGET={{ policy_target }}"
+
+# Bound to the venv-installed foreman entrypoint
+ExecStart={{ install_dir }}/.venv/bin/foreman gateway
+
+Restart=on-failure
+RestartSec=5s
+
+# Resource hygiene
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths={{ workspace_dir }}
+PrivateTmp=true
+
+# journald captures stdout/stderr
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=foreman
+
+[Install]
+WantedBy=multi-user.target

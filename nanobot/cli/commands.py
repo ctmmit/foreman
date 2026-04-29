@@ -63,6 +63,11 @@ app = typer.Typer(
     no_args_is_help=True,
 )
 
+# Foreman: register `foreman install` (the wizard). Keep imports lazy so the
+# CLI starts fast even when install is not the command being run.
+from foreman.cli import register_install_command  # noqa: E402
+register_install_command(app)
+
 console = Console()
 EXIT_COMMANDS = {"exit", "quit", "/exit", "/quit", ":q"}
 
