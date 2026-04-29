@@ -380,19 +380,28 @@ class AgentLoop:
                     user_agent=self.web_config.user_agent,
                 )
             )
-        self.tools.register(MessageTool(send_callback=self.bus.publish_outbound, workspace=self.workspace))
+        # Foreman: bootstrap the deployment policy BEFORE the message tool
+        # registers, so the approval gate is in place from the first send.
+        from foreman.security import bootstrap_policy as _bootstrap_foreman_policy
+        _bootstrap_foreman_policy()
+
+        # Foreman: ForemanMessageTool replaces upstream MessageTool. It
+        # consults the deployment policy's outbound_send gate before sending;
+        # blocked sends land in workspace/personality/outbound_queue.jsonl
+        # for owner review and a matching audit_log entry is written.
+        from foreman.security.outbound_gate import ForemanMessageTool
+        self.tools.register(
+            ForemanMessageTool(
+                send_callback=self.bus.publish_outbound,
+                workspace=self.workspace,
+                foreman_workspace=self.workspace,
+            )
+        )
         self.tools.register(SpawnTool(manager=self.subagents))
         if self.cron_service:
             self.tools.register(
                 CronTool(self.cron_service, default_timezone=self.context.timezone or "UTC")
             )
-
-        # Foreman: bootstrap the deployment policy (egress allowlist + SSRF
-        # whitelist + outbound-send gate) BEFORE registering tools that issue
-        # outbound traffic. Fail-loud if no policy resolves; that's the safer
-        # failure mode than silently running unrestricted.
-        from foreman.security import bootstrap_policy as _bootstrap_foreman_policy
-        _bootstrap_foreman_policy()
 
         # Foreman: register the seven shop-* quoting tools.
         # Single import + single call so upstream merges of this file are minimal.
