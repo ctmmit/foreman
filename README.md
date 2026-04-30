@@ -52,7 +52,7 @@ The orchestration recipe the agent follows for end-to-end quoting is [`foreman-q
 
 **Next: every white-collar workflow inside the shop.** Scheduling, procurement, capacity planning, customer follow-up, pricing strategy, succession planning, financial reporting. Each new skill compounds the agent's value to the owner without making the runtime more complex.
 
-**Eventually: outside the walls of the shop.** Once Foremans are deployed at scale, they develop skills to interact with each other and with buyer-side agents — quoting jobs to other shops' agents, brokering overflow capacity, exposing operational state to buyers under policy. Federation is deferred until enough Foremans exist to make it useful, and only as opt-in skills the owner enables. The architecture today preserves that arc without committing to it.
+**Eventually: outside the walls of the shop.** Once Foremans are deployed at scale, the network is what emerges from per-shop agency — not a marketplace, not a central protocol operator, but an ecosystem with four properties no centralized system can have: visibility into the federated industrial graph, efficiency from peer-to-peer coordination, automation that leaves humans on commitments and agents on coordination, and the compounding progress those three create. Federation is deferred until enough Foremans exist to make it useful; the architecture today preserves that arc without committing to it. See [The emergent ecosystem](#the-emergent-ecosystem) below.
 
 ---
 
@@ -171,16 +171,21 @@ foreman queue reject <queue_id> --note "wrong customer"
 
 ---
 
-## The agentic-web case
+## The emergent ecosystem
 
-The web is being rebuilt as a network of agents that act on behalf of users, coordinate through shared protocols, and accumulate trust over time. Foreman applies that thesis to a vertical that needs it most.
+The web is being rebuilt as a network of agents that act on behalf of users, coordinate through shared protocols, and accumulate trust over time. Foreman applies that thesis to a vertical that needs it most. The interesting claim is not "Foremans will do these specific things for each other." It is that the same per-shop primitive — agent + skills + per-shop policy — composes at scale into an ecosystem with four properties no centralized system can have.
 
-- **Per-user agency.** Every shop has its own agent, with its own memory, policy, and authorized actions. This is the foundational primitive of the agentic web — per-user agents must exist before any network can form.
-- **Skills compose.** New capabilities ship as new skills. The agent gets more useful every quarter without becoming more complex. The skill library is the moat.
-- **Trust without centralization.** Each shop owns its data. No marketplace operator sits in the middle.
-- **Network capabilities at scale.** Once enough Foremans are deployed, they develop skills to interact outside the walls of the shop — a buyer's procurement agent calls `shop-quote(drawing, qty, due_date)` directly; a partner shop's Foreman brokers an outside-process job; excess capacity routes opt-in across a regional cluster. None of this requires a central operator. The architecture today preserves the right to every layer above; it does not commit to any of them.
+**Visibility — the federated graph becomes legible.** Today, North American manufacturing is operationally invisible. Nobody — not the shops themselves, not OEMs, not policy makers — has a real-time view of which shops can do what, at what price, with what capacity. With Foremans interacting under per-shop policy, the regional industrial graph emerges bottom-up: who can do AS9100D titanium work in the Pittsburgh corridor, where 5-axis capacity is tight this week, which shops are the local experts on what. No central operator owns the graph; it lives at the edges, queryable from any node. The eventual buyers of that legibility are not the shops — they have it locally — but OEMs concerned with industrial-base resilience, sovereign-wealth allocators, and government.
 
-The conventional play (Xometry, Fictiv, Hubs) forecloses that arc by capturing the customer relationship on day one. The agentic-web play does not require that capture. Each shop keeps its customer; the network forms from the bottom up.
+**Efficiency — coordination cost collapses.** The routing graph already exists, but it lives in owners' heads and runs on phone calls. Every outside-process handoff, every spec question, every overflow match is bottlenecked by the friction of finding the right peer for the right thing at the right time. When Foremans interact, that friction approaches zero. Spare capacity becomes addressable. Knowledge unlocks. Customer relationships survive moments that would otherwise break them.
+
+**Automation — humans on commitments, agents on coordination.** The disciplined split. Centralized marketplaces automate commitments; the shop becomes a fungible execution layer. Foreman does the opposite. Agents handle discovery, query, signal, draft, and routing. Owners stay in their authority over every outbound commitment via the same approval gate that wraps internal use. The owner becomes more powerful, not less. This is what makes the system trustworthy at scale.
+
+**Progress — the compounding loop.** Better win rates, less time lost to coordination, customer relationships preserved through cluster slack, tribal knowledge made queryable so apprentices learn faster. Shops survive the owner-succession cliff. Regional clusters coordinate as clusters. Eventually, the federated industrial graph becomes legible at industrial-base scale, and the conversation about manufacturing resilience stops requiring a McKinsey study.
+
+The architecture rests on three principles the vision treats as foundational: **per-user agency** (every shop has its own agent — the prerequisite for any network), **skills compose** (capability is the moat; the runtime stays simple), and **trust without centralization** (each shop owns its data; no marketplace operator sits in the middle). The conventional play (Xometry, Fictiv, Hubs) forecloses the emergent arc by capturing the customer relationship on day one. The agentic-web play does not require that capture. Each shop keeps its customer; the network forms from the bottom up.
+
+The architecture today preserves the right to every layer above. It does not commit to any of them. **That is the discipline.**
 
 ---
 
