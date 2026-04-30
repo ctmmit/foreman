@@ -14,7 +14,7 @@ Foreman is **LLM-agnostic** and **deployment-agnostic**. The same code runs on a
 
 Network capabilities — one Foreman talking to another, or to a buyer's procurement agent via MCP — are deliberately deferred until enough Foremans exist to make them useful. That is Phase Three. We do not build it now.
 
-The team is Aline Zimerman, Colin McGonigle, Omar Dominguez. MAS.664 AI Studio, MIT Media Lab.
+The team is Colin McGonigle and Omar Dominguez.
 
 ---
 
@@ -224,7 +224,7 @@ Four rules that every skill, adapter, and policy file must honor. These exist be
 
 **Tests.** Every skill has at least one integration test that runs the full agent loop. Every adapter has unit tests against a recorded fixture and an integration test against a sandboxed instance of the target system. Drawing extraction has a regression test set with 20+ real drawings, scored on tolerance precision and recall.
 
-**Reviews.** Any change that touches the runtime is reviewed by Omar before merge. Any change that touches the personality schema is reviewed by Aline. Anything else can ship after one approving review.
+**Reviews.** Any change that touches the runtime is reviewed by Omar before merge. Any change that touches the personality schema is reviewed by Colin. Anything else can ship after one approving review.
 
 **Commits.** Conventional commits format (`feat:`, `fix:`, `chore:`, `docs:`). Reference the skill or adapter affected in the scope (e.g., `feat(extract-drawing): handle Spanish dimension callouts`).
 
