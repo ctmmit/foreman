@@ -26,17 +26,17 @@ Four properties make a shop owner's agent the right primitive.
 
 **Knows the shop.** From day one the agent ingests what the shop manufactures, the equipment list, the customer history, the pricing patterns, and the routing memory. Every owner correction is captured and recalled on the next matching situation. Institutional knowledge becomes queryable.
 
-**Sovereign by configuration.** The shop chooses the deployment target — managed Foreman cloud, the shop's own cloud account, or on-prem hardware. Defense work, ITAR exposure, regulated programs: same code, same skills, same memory model — only the deployment target changes. Sovereignty is a configuration, not a product tier.
+**Sovereign by configuration.** The shop chooses the deployment target: managed Foreman cloud, the shop's own cloud account, or on-prem hardware. Defense work, ITAR exposure, regulated programs all run the same code, the same skills, the same memory model. Only the deployment target changes. Sovereignty is a configuration, not a product tier.
 
-**Open source.** MIT-licensed. Inspectable, forkable, and deployable without vendor lock-in. This is what keeps the long-arc vision credible to sovereignty-obsessed buyers — government, defense, OEMs concerned with industrial-base resilience.
+**Open source.** MIT-licensed. Inspectable, forkable, and deployable without vendor lock-in. This is what keeps the long-arc vision credible to sovereignty-obsessed buyers (government, defense, OEMs concerned with industrial-base resilience).
 
 ---
 
 ## How capability ships
 
-Foreman is built on a skill model. Capability ships as **skills** — small, independently testable units (a `SKILL.md` plus a registered Python tool). New capabilities ship as new skills, not as new code paths in a monolith. Skills can be authored by Foreman, by third parties, or by the shops themselves.
+Foreman is built on a skill model. Capability ships as **skills**: small, independently testable units (a `SKILL.md` plus a registered Python tool). New capabilities ship as new skills, not as new code paths in a monolith. Skills can be authored by Foreman, by third parties, or by the shops themselves.
 
-**Today: the Quoting bundle (seven skills).** The first generation addresses responding to a customer RFQ — the most painful and most universal SMB-manufacturing workflow.
+**Today: the Quoting bundle (seven skills).** The first generation addresses responding to a customer RFQ, the most painful and most universal SMB-manufacturing workflow.
 
 | Skill | What it does |
 |---|---|
@@ -52,13 +52,13 @@ The orchestration recipe the agent follows for end-to-end quoting is [`foreman-q
 
 **Next: every white-collar workflow inside the shop.** Scheduling, procurement, capacity planning, customer follow-up, pricing strategy, succession planning, financial reporting. Each new skill compounds the agent's value to the owner without making the runtime more complex.
 
-**Eventually: outside the walls of the shop.** Once Foremans are deployed at scale, the network is what emerges from per-shop agency — not a marketplace, not a central protocol operator, but an ecosystem with four properties no centralized system can have: visibility into the federated industrial graph, efficiency from peer-to-peer coordination, automation that leaves humans on commitments and agents on coordination, and the compounding progress those three create. Federation is deferred until enough Foremans exist to make it useful; the architecture today preserves that arc without committing to it. See [The emergent ecosystem](#the-emergent-ecosystem) below.
+**Eventually: outside the walls of the shop.** Once Foremans are deployed at scale, the network is what emerges from per-shop agency. Not a marketplace, not a central protocol operator, but an ecosystem with four properties no centralized system can have: visibility into the federated industrial graph, efficiency from peer-to-peer coordination, automation that leaves humans on commitments and agents on coordination, and the compounding progress those three create. Federation is deferred until enough Foremans exist to make it useful; the architecture today preserves that arc without committing to it. See [The emergent ecosystem](#the-emergent-ecosystem) below.
 
 ---
 
 ## The hero behavior: the learning loop
 
-This is the agentic moment — the proof that the primitive works.
+This is the agentic moment. The proof that the primitive works.
 
 ```bash
 # t=0: initial quote, no prior feedback for this customer
@@ -91,26 +91,26 @@ Every other skill in the library composes against the same memory.
 - Other channels (Discord, Telegram, Matrix, WhatsApp, etc.) remain in the codebase but are off by default. Attack-surface reduction.
 
 ### Memory and learning
-- **Personality store** — seven structured slots: `shop_profile`, `equipment[]`, `customers[customer_id]`, `materials[material_code]`, `routing_memory[(process, material)]`, `pricing_corrections[(customer_id, context)]`, `audit_log` (append-only).
+- **Personality store.** Seven structured slots: `shop_profile`, `equipment[]`, `customers[customer_id]`, `materials[material_code]`, `routing_memory[(process, material)]`, `pricing_corrections[(customer_id, context)]`, `audit_log` (append-only).
 - **Customer-id resolver** with confidence-gated escalation. Wrong customer → wrong recalled feedback → wrong margin applied. Below 0.9 confidence the agent escalates to the owner instead of guessing. Property-tested.
-- **Audit log on every personality write** — the agent's authority comes from being correctable. Every write records caller / timestamp / slot / delta. Reversible.
-- **Two-tier memory model** — free-form long-term markdown plus structured slots; consolidated by a background pass.
+- **Audit log on every personality write.** The agent's authority comes from being correctable. Every write records caller / timestamp / slot / delta. Reversible.
+- **Two-tier memory model.** Free-form long-term markdown plus structured slots; consolidated by a background pass.
 
 ### Safety and policy
 - **Three deployment policies** in [`policies/`](./policies): `managed-cloud.yaml`, `single-tenant-cloud.yaml`, `on-prem.yaml`.
-- **Egress allowlist** — outbound HTTP only to the configured LLM provider, the email server, and explicitly enumerated MCP servers. Anything else denied.
+- **Egress allowlist.** Outbound HTTP only to the configured LLM provider, the email server, and explicitly enumerated MCP servers. Anything else denied.
 - **Outbound-send approval gate** enforced via `ForemanMessageTool`. Blocked sends land in `workspace/personality/outbound_queue.jsonl` for owner review through `foreman queue list / approve / reject`.
-- **Drawings never leave the deployment.** The on-prem policy ships with `llm_provider_hosts: []` — assumes local Ollama / vLLM, no cloud reach.
+- **Drawings never leave the deployment.** The on-prem policy ships with `llm_provider_hosts: []` (assumes local Ollama / vLLM, no cloud reach).
 
 ### LLM providers
 Curated in the install wizard: **Anthropic** (default cloud), **OpenAI** (alternate cloud), **Ollama** (on-prem local), **vLLM** (on-prem high-throughput). The full provider registry (Azure OpenAI, OpenRouter, HuggingFace, etc.) remains accessible behind an "advanced" toggle.
 
 ### Deployment
 Four platform packagings, all from a unified setup wizard:
-- **Docker / docker-compose** — default for managed and single-tenant cloud.
-- **systemd service unit** — Linux native (`Restart=on-failure`, `User=foreman`, journald logging).
-- **macOS LaunchAgent** — `com.foreman.agent.plist`, KeepAlive on, logs under `~/Library/Logs/Foreman/`.
-- **Windows service** — wrapped via [NSSM](https://nssm.cc/), logs to `%ProgramData%\Foreman\logs\` + Windows Event Log.
+- **Docker / docker-compose.** Default for managed and single-tenant cloud.
+- **systemd service unit.** Linux native (`Restart=on-failure`, `User=foreman`, journald logging).
+- **macOS LaunchAgent.** `com.foreman.agent.plist`, KeepAlive on, logs under `~/Library/Logs/Foreman/`.
+- **Windows service.** Wrapped via [NSSM](https://nssm.cc/), logs to `%ProgramData%\Foreman\logs\` + Windows Event Log.
 
 ---
 
@@ -148,7 +148,7 @@ sudo systemctl enable --now foreman
 journalctl -u foreman -f
 ```
 
-The install wizard generates the deployment file(s), writes `~/.foreman/config.json` (no inlined secrets — provider keys surface as `${ANTHROPIC_API_KEY}` interpolation), and writes a per-deployment `.env` chmod'd to `0600` on POSIX.
+The install wizard generates the deployment file(s), writes `~/.foreman/config.json` (no inlined secrets; provider keys surface as `${ANTHROPIC_API_KEY}` interpolation), and writes a per-deployment `.env` chmod'd to `0600` on POSIX.
 
 ### Inspect the outbound queue (owner approval workflow)
 
@@ -173,17 +173,17 @@ foreman queue reject <queue_id> --note "wrong customer"
 
 ## The emergent ecosystem
 
-The web is being rebuilt as a network of agents that act on behalf of users, coordinate through shared protocols, and accumulate trust over time. Foreman applies that thesis to a vertical that needs it most. The interesting claim is not "Foremans will do these specific things for each other." It is that the same per-shop primitive — agent + skills + per-shop policy — composes at scale into an ecosystem with four properties no centralized system can have.
+The web is being rebuilt as a network of agents that act on behalf of users, coordinate through shared protocols, and accumulate trust over time. Foreman applies that thesis to a vertical that needs it most. The interesting claim is not "Foremans will do these specific things for each other." It is that the same per-shop primitive (agent, skills, per-shop policy) composes at scale into an ecosystem with four properties no centralized system can have.
 
-**Visibility — the federated graph becomes legible.** Today, North American manufacturing is operationally invisible. Nobody — not the shops themselves, not OEMs, not policy makers — has a real-time view of which shops can do what, at what price, with what capacity. With Foremans interacting under per-shop policy, the regional industrial graph emerges bottom-up: who can do AS9100D titanium work in the Pittsburgh corridor, where 5-axis capacity is tight this week, which shops are the local experts on what. No central operator owns the graph; it lives at the edges, queryable from any node. The eventual buyers of that legibility are not the shops — they have it locally — but OEMs concerned with industrial-base resilience, sovereign-wealth allocators, and government.
+**Visibility.** The federated graph becomes legible. Today, North American manufacturing is operationally invisible. Nobody (not the shops themselves, not OEMs, not policy makers) has a real-time view of which shops can do what, at what price, with what capacity. With Foremans interacting under per-shop policy, the regional industrial graph emerges bottom-up: who can do AS9100D titanium work in the Pittsburgh corridor, where 5-axis capacity is tight this week, which shops are the local experts on what. No central operator owns the graph; it lives at the edges, queryable from any node. The eventual buyers of that legibility are not the shops (they have it locally) but OEMs concerned with industrial-base resilience, sovereign-wealth allocators, and government.
 
-**Efficiency — coordination cost collapses.** The routing graph already exists, but it lives in owners' heads and runs on phone calls. Every outside-process handoff, every spec question, every overflow match is bottlenecked by the friction of finding the right peer for the right thing at the right time. When Foremans interact, that friction approaches zero. Spare capacity becomes addressable. Knowledge unlocks. Customer relationships survive moments that would otherwise break them.
+**Efficiency.** Coordination cost collapses. The routing graph already exists, but it lives in owners' heads and runs on phone calls. Every outside-process handoff, every spec question, every overflow match is bottlenecked by the friction of finding the right peer for the right thing at the right time. When Foremans interact, that friction approaches zero. Spare capacity becomes addressable. Knowledge unlocks. Customer relationships survive moments that would otherwise break them.
 
-**Automation — humans on commitments, agents on coordination.** The disciplined split. Centralized marketplaces automate commitments; the shop becomes a fungible execution layer. Foreman does the opposite. Agents handle discovery, query, signal, draft, and routing. Owners stay in their authority over every outbound commitment via the same approval gate that wraps internal use. The owner becomes more powerful, not less. This is what makes the system trustworthy at scale.
+**Automation.** Humans on commitments, agents on coordination. The disciplined split. Centralized marketplaces automate commitments; the shop becomes a fungible execution layer. Foreman does the opposite. Agents handle discovery, query, signal, draft, and routing. Owners stay in their authority over every outbound commitment via the same approval gate that wraps internal use. The owner becomes more powerful, not less. This is what makes the system trustworthy at scale.
 
-**Progress — the compounding loop.** Better win rates, less time lost to coordination, customer relationships preserved through cluster slack, tribal knowledge made queryable so apprentices learn faster. Shops survive the owner-succession cliff. Regional clusters coordinate as clusters. Eventually, the federated industrial graph becomes legible at industrial-base scale, and the conversation about manufacturing resilience stops requiring a McKinsey study.
+**Progress.** The compounding loop. Better win rates, less time lost to coordination, customer relationships preserved through cluster slack, tribal knowledge made queryable so apprentices learn faster. Shops survive the owner-succession cliff. Regional clusters coordinate as clusters. Eventually, the federated industrial graph becomes legible at industrial-base scale, and the conversation about manufacturing resilience stops requiring a McKinsey study.
 
-The architecture rests on three principles the vision treats as foundational: **per-user agency** (every shop has its own agent — the prerequisite for any network), **skills compose** (capability is the moat; the runtime stays simple), and **trust without centralization** (each shop owns its data; no marketplace operator sits in the middle). The conventional play (Xometry, Fictiv, Hubs) forecloses the emergent arc by capturing the customer relationship on day one. The agentic-web play does not require that capture. Each shop keeps its customer; the network forms from the bottom up.
+The architecture rests on three principles the vision treats as foundational: **per-user agency** (every shop has its own agent, the prerequisite for any network), **skills compose** (capability is the moat; the runtime stays simple), and **trust without centralization** (each shop owns its data; no marketplace operator sits in the middle). The conventional play (Xometry, Fictiv, Hubs) forecloses the emergent arc by capturing the customer relationship on day one. The agentic-web play does not require that capture. Each shop keeps its customer; the network forms from the bottom up.
 
 The architecture today preserves the right to every layer above. It does not commit to any of them. **That is the discipline.**
 
@@ -228,8 +228,8 @@ In order of effort and proximity:
 
 ## Contact
 
-- Omar Dominguez — [github.com/odominguez7](https://github.com/odominguez7)
-- Colin McGonigle — [github.com/ctmmit](https://github.com/ctmmit)
+- Omar Dominguez · [github.com/odominguez7](https://github.com/odominguez7)
+- Colin McGonigle · [github.com/ctmmit](https://github.com/ctmmit)
 - Aline Zimerman
 
 ---
