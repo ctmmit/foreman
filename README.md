@@ -222,15 +222,14 @@ In order of effort and proximity:
 
 | | |
 |---|---|
-| **Aline Zimerman** | Co-founder. Behavioral data, personality store design. PhD Fellow, Boston Children's Hospital / Harvard Medical School. |
-| **Colin McGonigle** | Co-founder. Strategy and architecture. MIT Sloan Fellow MBA. Eight years as Director of Research at Mozaic LLC. |
 | **Omar Dominguez** | Co-founder, lead engineer. Eleven years operating his family's CNC shop. MIT Sloan Fellow MBA. |
+| **Colin McGonigle** | Co-founder. Strategy, architecture, and investing. MIT Sloan Fellow MBA. |
+
 
 ## Contact
 
 - Omar Dominguez · [github.com/odominguez7](https://github.com/odominguez7)
 - Colin McGonigle · [github.com/ctmmit](https://github.com/ctmmit)
-- Aline Zimerman
 
 ---
 
